@@ -64,16 +64,18 @@ def company_and_industry_query(state: AgentState):
   industry_name = industry_match.group(1) if industry_match else None
   queries = []
   if company_name:
-      queries.extend([f'{company_name} Annual report pdf latest AND {company_name} website']) 
-                      # f'{company_name} GenAI applications'])
+      queries.extend([f'{company_name} Annual report latest AND {company_name} website AND no PDF results', 
+                      # f'{company_name} GenAI applications',
                       # f'{company_name} key offerings and strategic focus areas (e.g., operations, supply chain, customer experience)', 
-                      # f'{company_name} competitors and market share'])
+                      # f'{company_name} competitors and market share'
+                      ])
 
   if industry_name:
       queries.extend([
-        #  f'{industry_name} report latest mckinsey, deloitte, nexocode', 
-                      f'{industry_name} GenAI applications'])
-                      # f'{industry_name} trends, challenges and oppurtunities'])
+         f'{industry_name} report latest mckinsey, deloitte, nexocode', 
+                      # f'{industry_name} GenAI applications',
+                      # f'{industry_name} trends, challenges and oppurtunities'
+                      ])
 
   print('--extract_company_and_industry--finished--', queries)
   return {'queries': queries, 'company': company_name, 'industry': industry_name}

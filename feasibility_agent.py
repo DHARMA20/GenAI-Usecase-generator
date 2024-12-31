@@ -1,12 +1,12 @@
 from setup import *
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
-from pydantic import BaseModel
+from pydantic import BaseModel,ValidationError
 from typing import List
 from langchain_community.tools import TavilySearchResults
 
 
 keyword_search = TavilySearchResults(
-    max_results=3,
+    max_results=2,
     search_depth="advanced",
     include_answer=True,
     include_raw_content=True,
@@ -40,7 +40,16 @@ class KeywordGenerationResponse(BaseModel):
 def keyword_generation(report):
 
   query_generation_sys_prompt = SystemMessage(content='''You are an expert in creating precise and relevant keyword queries to search for datasets. Your task is to generate a keyword query for each use case provided below. These queries should be optimized for searching datasets on platforms such as GitHub, Kaggle, and Hugging Face.  
-
+  
+    Your JSON structure must strictly include:
+    [
+        {
+            "use_case": "string",
+            "description": "string",
+            "keyword": "string"
+        }
+    ]
+                                                                                       
   **Instructions:**  
   1. Extract the key concepts from the use case (e.g., objectives, AI application, and domain).  
   2. Formulate a concise, descriptive query using relevant terms and synonyms.  
@@ -64,13 +73,14 @@ def keyword_generation(report):
   - **Sales:** Increases sales by suggesting relevant products to customers.  
   - **Operations:** Enhances employee productivity by automating routine tasks.  
 
+  You must very very striclty follow the below format for the output dictionary.Pls do not deviate from the format. Always remember to follow the format strictly.                                    
   Example output:
     [{'use_case' : "Personalized Shopping Experiences with GenAI" , 
-      'description':"AI-driven personalization enhances customer satisfaction through tailored offers, recommendations, and marketing based on individual preferences."                                
+      'description':"AI-driven personalization enhances customer satisfaction through tailored offers, recommendations, and marketing based on individual preferences",                                
     'keyword': "e-commerce personalized shopping data customer behavior recommendation system offers dataset"},
     {'use_case': "AI-Powered Chatbots for Customer Service" , 
-      'description': AI chatbots provide instant, accurate assistance, improving customer service, increasing sales, and boosting operational efficiency.                                
-    'keyword': "customer service chatbot dataset customer queries retail e-commerce AI automation"}]''')
+      'description': "AI chatbots provide instant, accurate assistance, improving customer service, increasing sales, and boosting operational efficiency",                               
+      'keyword': "customer service chatbot dataset customer queries retail e-commerce AI automation"}]''')
 
 
   # Example usage (you will use llm to generate the output)
@@ -79,11 +89,19 @@ def keyword_generation(report):
   # Your report as input (ensure that this variable is properly formatted and available)
   report_msg = HumanMessage(content=f'The usecases are as follows {report}')
 
-  # Invoke the LLM and get the response
-  output_dict = Keyword_generation_llm.invoke([query_generation_sys_prompt, report_msg])
+  try:
+      output_dict = Keyword_generation_llm.invoke([query_generation_sys_prompt, report_msg])
+      if not output_dict or not isinstance(output_dict, dict):
+          raise ValueError("Unexpected LLM output format")
 
+      parsed_response = KeywordGenerationResponse(**output_dict)
+  
+  except ValidationError as e:
+      print(f"Validation error: {e}")
+      print(f"Invalid data: {output_dict}")
+      raise
   # Convert the response to a list of dictionaries
-  output_list = output_dict.to_list_of_dicts()
+  output_list = parsed_response.to_list_of_dicts()
 
   return output_list
 
@@ -92,7 +110,7 @@ def keyword_generation(report):
 def dataset_search(output_list):
   for usecase_dict in output_list:
     query = usecase_dict['keyword']
-    query_format = 'kaggle OR github OR huggingface ' + 'AND' + query
+    query_format = 'kaggle OR github OR huggingface AND ({query})'
     links = keyword_search.invoke({'query': query_format})
     usecase_dict['links'] = links
   return output_list
@@ -115,7 +133,7 @@ def delete_columns(output_list):
 
   for dict_item in output_list:
     for key in keys_to_del:
-      del dict_item[key]
+      dict_item.pop(key, None)
   return output_list
 
 

@@ -11,7 +11,7 @@ from langgraph.graph import MessagesState
 from typing import Annotated
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings.jina import JinaEmbeddings
-
+# from langchain_huggingface import HuggingFaceEmbeddings
 
 class Analyst(BaseModel):
     affiliation: str = Field(
@@ -399,7 +399,7 @@ report_writer_instructions = '''You are a technical writer tasked with creating 
 
 Your team of analysts has conducted interviews and written memos based on their findings. Your task is to consolidate the insights from these memos into a cohesive and structured report, following this format:  
 
-Think deeply and Generate atleat 10 use cases based on the memos.
+Think deeply and Generate atleat 2 use cases based on the memos.
 
 ### Format for Each Use Case  
 1. **Title Header:** Use a descriptive title for each use case, such as "## Use Case 1: AI-Powered Predictive Maintenance."  
@@ -588,6 +588,8 @@ def usecase_agent_func(topic,max_analysts):
                  config)
   final_state = graph.get_state(config)
   report = final_state.values.get('final_report')
+
+  print('-----REPORT-----', report)
 
   return report
 
