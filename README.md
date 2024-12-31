@@ -2,6 +2,8 @@
 
 **Use Case Genie** is a powerful GenAI application designed to help you discover and explore relevant use cases for your company or industry. This application leverages advanced language models and web scraping to provide insightful reports on the potential of Generative AI in various contexts.
 
+# [APP_Link](https://huggingface.co/spaces/Dharma20/UseCaseGenie-GenAI-Usecase-Generator)
+
 ## Features
 
 *   **Intelligent Query Analysis**: Automatically identifies if your query refers to a specific company or an industry.
