@@ -82,7 +82,7 @@ You'll also need API keys for the following services (you will be prompted when 
 *   `agent.py`: Contains the logic for the research agent, which analyzes user queries and scrapes the web.
 *   `setup.py`: Handles environment variables and initializes the LLM and search tool.
 *   `usecase_agent.py`: Defines the agent responsible for generating use cases.
-*   `feasibility_agent.py`: (commented out) Handles keyword generation for datasets.
+*   `feasibility_agent.py`: Handles keyword generation for querying datasets and checking feasibility.
 *   `vectorstore.py`: Manages the document loading and processing, including cleaning and chunking
 *   `main.py`: Sets up the Gradio interface and orchestrates the overall process.
 *   `requirements.txt`: Lists the Python dependencies.
@@ -108,7 +108,7 @@ You'll also need API keys for the following services (you will be prompted when 
     *   Based on the interviews, generates structured use case memos.
     *   The use case memos are consolidated into a final report, including a compelling introduction and conclusion.
 
-4.  **Feasibility Agent (`feasibility_agent.py`)**: *(Note: This is commented out, meaning this functionality is not fully integrated)*
+4.  **Feasibility Agent (`feasibility_agent.py`)**: 
     *   Generates keywords from each use case.
     *   Searches for datasets on platforms such as Kaggle, Github, and Huggingface.
     *   Combines results and returns an excel sheet with use case and a list of links for dataset.
