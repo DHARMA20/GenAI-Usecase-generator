@@ -5,7 +5,7 @@
 # [APP_Link](https://huggingface.co/spaces/Dharma20/UseCaseGenie-GenAI-Usecase-Generator)
 
 ## Architecture
-![GenAI Agent Archietecture](GenAI Agent Archietecture.jpg)
+![GenAI Agent Archietecture](https://github.com/DHARMA20/GenAI-Usecase-generator/blob/main/GenAI%20Agent%20Archietecture.jpg)
 
 
 ## Features
