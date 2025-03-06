@@ -124,10 +124,9 @@ You'll also need API keys for the following services (you will be prompted when 
 ## Potential improvements
 
 *   **Feasibility Analysis**: Complete integration of the feasibility agent to check dataset availability.
-
-# [APP_Link](https://huggingface.co/spaces/Dharma20/UseCaseGenie-GenAI-Usecase-Generator)
 *   **GUI Enhancement**: Add a better and user friendly GUI.
 *   **Documentation**: More detailed documentation on each module and functionality.
 *   **Error Handling**: Add more detailed error handling and logging.
 
+### [APP_Link](https://huggingface.co/spaces/Dharma20/UseCaseGenie-GenAI-Usecase-Generator)
 
