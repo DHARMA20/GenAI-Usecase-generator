@@ -2,8 +2,6 @@
 
 **Use Case Genie** is a powerful GenAI application designed to help you discover and explore relevant use cases for your company or industry. The application leverages Multi-AI Agent architecture with advanced language models, enabling dynamic task orchestration and workflows to generate insightful reports. By integrating web scraping and external tool calling, it gathers relevant data to provide comprehensive reports on the potential of Generative AI across various contexts.
 
-# [APP_Link](https://huggingface.co/spaces/Dharma20/UseCaseGenie-GenAI-Usecase-Generator)
-
 ## Architecture
 ![GenAI Agent Archietecture](https://github.com/DHARMA20/GenAI-Usecase-generator/blob/main/GenAI%20Agent%20Archietecture.jpg)
 
@@ -126,6 +124,8 @@ You'll also need API keys for the following services (you will be prompted when 
 ## Potential improvements
 
 *   **Feasibility Analysis**: Complete integration of the feasibility agent to check dataset availability.
+
+# [APP_Link](https://huggingface.co/spaces/Dharma20/UseCaseGenie-GenAI-Usecase-Generator)
 *   **GUI Enhancement**: Add a better and user friendly GUI.
 *   **Documentation**: More detailed documentation on each module and functionality.
 *   **Error Handling**: Add more detailed error handling and logging.
